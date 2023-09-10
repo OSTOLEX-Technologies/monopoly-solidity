@@ -2,38 +2,24 @@
 pragma solidity ^0.8.0;
 
 import './Jail.sol';
+import './RoomController.sol';
 
-contract Monopoly is Jail {
-    struct Room {
-        address[] players;
-        uint8 currentPlayerIndex;
-        uint256 randomParameter;
-    }
 
-    mapping(uint256 => Room) public rooms;
-    mapping(address => uint256) public playerInRoom;
-    uint256 public numberOfRooms;
-
-    constructor() {
-        numberOfRooms = 0;
-    }
+contract Monopoly is Jail, RoomController {
 
     modifier onlyActivePlayer(uint256 roomId) {
-        Room storage room = rooms[roomId];
-        uint256 playerIndex = rooms[roomId].currentPlayerIndex;
-        address activePlayer = room.players[playerIndex];
+        address activePlayer = RoomController.getCurrentPlayerAddress(roomId);
         require(
-            rooms[roomId].players[playerIndex] == msg.sender,
+            activePlayer == msg.sender,
             "It is not you turn to make a move"
         );
         _;
     }
 
-    function createRoom(address[] calldata players) external returns (uint256) {
-        Room storage room = rooms[numberOfRooms]; 
-        room.players = players;
-        
-        numberOfRooms++;
-        return numberOfRooms;
+    function initNewRoom(address[] calldata players) external returns (uint256) {
+        RoomController.createRoom(players);        
+        Jail.free(players);
+
+        return RoomController.numberOfRooms;
     }
 }

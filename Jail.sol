@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-// import './Monopoly.sol';
-
 contract Jail {
     mapping(address => bool) public  isInJail;
 
@@ -14,13 +12,13 @@ contract Jail {
         isInJail[player] = true;
     }
 
-    function freePlayer(address player) internal  {
+    function free(address player) internal  {
         isInJail[player] = false;
     }
     
-    function freePlayers(address[] calldata players) internal {
+    function free(address[] calldata players) internal {
         for (uint256 i = 0; i < players.length; i++) {
-            freePlayer(players[i]);
+            free(players[i]);
         }
     }
 
