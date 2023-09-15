@@ -4,14 +4,14 @@ pragma solidity ^0.8.0;
 import './Jail.sol';
 import './RoomController.sol';
 import './PlayerController.sol';
+import './RandomGenerator.sol';
 
+contract Monopoly is Jail, RoomController, PlayerController, RandomGenerator {
 
-contract Monopoly is Jail, RoomController, PlayerController {
-
-    modifier onlyActivePlayer(uint256 roomId) {
-        address activePlayer = RoomController.getCurrentPlayerAddress(roomId);
+    modifier onlyCurrentPlayer(uint256 roomId) {
+        address currentPlayer = getCurrentPlayerAddress(roomId);
         require(
-            activePlayer == msg.sender,
+            currentPlayer == msg.sender,
             "It is not you turn to make a move"
         );
         _;
@@ -29,5 +29,15 @@ contract Monopoly is Jail, RoomController, PlayerController {
         assignPlayersToRoom(roomId, players);        
 
         return roomId;
+    }
+
+    function rollDice(uint256 roomId) external
+                                      onlyCurrentPlayer(roomId)
+                                      returns (uint256) {
+        uint256 diceValue = getRandomDiceValue();
+        address currentPlayer = getCurrentPlayerAddress(roomId);
+        updatePosition(currentPlayer, diceValue);
+
+        return diceValue;
     }
 }
