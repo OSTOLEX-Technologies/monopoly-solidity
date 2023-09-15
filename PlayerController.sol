@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract PlayerController {
+import './GameConstants.sol';
+
+contract PlayerController is GameConstants {
     struct Player {
         uint256 money;
         uint256 freeJailCards;
@@ -14,7 +16,8 @@ contract PlayerController {
                             uint256 positionChange
     ) internal returns (uint256) {
         Player storage player = playerData[playerAddress];
-        player.position += positionChange;
+        player.position = (player.position + positionChange) % FIELD_SIZE;
+
         return player.position;
     }
 
@@ -25,6 +28,11 @@ contract PlayerController {
             player.freeJailCards = 0;
             player.position = 0;
         }
+    }
+
+    function getPlayerPosition(address playerAddress) public view returns(uint256) {
+        Player storage player = playerData[playerAddress];
+        return player.position;
     }
 
 
