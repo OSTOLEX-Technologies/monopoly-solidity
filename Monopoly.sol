@@ -50,12 +50,31 @@ contract Monopoly is Jail, RoomController, PlayerController, RandomGenerator, Bo
         uint256 upgradeCost = getUpgradeCost(cardsToUpgrade);
         decreasePlayerBalance(currentPlayer, upgradeCost);
 
-        updatePosition(currentPlayer, diceValue);
+        uint256 newPosition = updatePosition(currentPlayer, diceValue);
         
-
+        if (action && isCardFree(roomId, newPosition)) {
+            buyCard(roomId, newPosition);
+        }
         
 
         return diceValue;
+    }
+
+    function buyCard(uint256 roomId, uint256 position) internal {
+        uint256 currentPlayerId = getCurrentPlayerIndex(roomId);
+        address currentPlayerAddress = getCurrentPlayerAddress(roomId);
+
+        require(
+            isCardFree(roomId, position),
+            "Property already has an owner"  
+        );
+        uint256 cardPrice = getCardPrice(position);
+        require(
+            getPlayerBalance(currentPlayerAddress) >= cardPrice,
+            "Player does not have enough balance"
+        );
+        decreasePlayerBalance(currentPlayerAddress, cardPrice);
+        setCardOwnerId(roomId, position, currentPlayerId);
     }
 
 }
