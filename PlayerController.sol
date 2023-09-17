@@ -5,7 +5,7 @@ import './GameConstants.sol';
 
 contract PlayerController is GameConstants {
     struct Player {
-        uint256 money;
+        uint256 balance;
         uint256 freeJailCards;
         uint256 position;    
     }
@@ -24,7 +24,7 @@ contract PlayerController is GameConstants {
     function restartPlayers(address[] calldata players) internal {
         for (uint256 i = 0; i < players.length; i++) {
             Player storage player = playerData[players[i]];
-            player.money = 0;
+            player.balance = 0;
             player.freeJailCards = 0;
             player.position = 0;
         }
@@ -33,6 +33,11 @@ contract PlayerController is GameConstants {
     function getPlayerPosition(address playerAddress) public view returns(uint256) {
         Player storage player = playerData[playerAddress];
         return player.position;
+    }
+
+    function getPlayerBalance(address playerAddress) public view returns(uint256) {
+        Player storage player = playerData[playerAddress];
+        return player.balance;
     }
 
 
