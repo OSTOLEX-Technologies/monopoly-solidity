@@ -54,7 +54,26 @@ contract BoardController is BoardField, GameConstants {
 
     function isCardFree(uint256 roomId, uint256 position) public view returns(bool) {
         Board storage board = roomBoard[roomId];
+        if (!isProperty(position)) {
+            return false;
+        }
         return board.cardPositionToOwnerId[position] != 0;
+    }
+
+    function isCardOwned(uint256 roomId, uint256 position) public view returns(bool) {
+        Board storage board = roomBoard[roomId];
+        if (!isProperty(position)) {
+            return false;
+        }
+        return board.cardPositionToOwnerId[position] == 0;
+    }
+
+    function isCardType(uint256 position, CardType cardType) public view returns(bool) {
+        return monopolyField[position].cardType == cardType;
+    }
+
+    function isProperty(uint256 position) public view returns(bool) {
+        return monopolyField[position].cardType == CardType.Property;
     }
 
     function getCardPrice(uint256 position) public view returns(uint256) {

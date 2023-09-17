@@ -55,7 +55,19 @@ contract Monopoly is Jail, RoomController, PlayerController, RandomGenerator, Bo
         if (action && isCardFree(roomId, newPosition)) {
             buyCard(roomId, newPosition);
         }
-        
+
+        if (isCardOwned(roomId, newPosition)) {
+            payRent(roomId, newPosition);
+        }
+
+        if (isCardFine(position)) {
+
+        }
+
+        if (isCardChance(position)) {
+            
+        }
+
 
         return diceValue;
     }
@@ -77,4 +89,7 @@ contract Monopoly is Jail, RoomController, PlayerController, RandomGenerator, Bo
         setCardOwnerId(roomId, position, currentPlayerId);
     }
 
+    function payRent(uint256 roomId, uint256 position) internal {
+        // TODO
+    }
 }
