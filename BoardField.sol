@@ -2,13 +2,14 @@
 pragma solidity ^0.8.0;
 
 import './CardController.sol';
-import './GameConstants.sol';
 
-contract BoardController is CardController {
+contract BoardField is CardController {
     mapping(uint256 => Card) monopolyField;
-
-    // MONOPOLY FIELD DATA
+    mapping(uint256 => uint256[]) getMonopolyIndexes;
+    
+        // MONOPOLY FIELD DATA
     constructor() {
+        // createMomopoly(uint8[]([1, 2, 3]));
         monopolyField[0] = Card({
             name: "",
             cardType: CardType.Start,
@@ -251,8 +252,14 @@ contract BoardController is CardController {
 
     // END OF MONOPOLY FIELD DATA
 
-    struct Board {
-        mapping(uint256 => uint256) cardPositionToOwnerId;
-        mapping(uint256 => uint256) cardPositionToLevel;        
+    function createMomopoly(uint8[] memory positions) internal {
+        for(uint256 i = 0; i < positions.length; i++) {
+            for(uint256 j = 0; j < positions.length; j++) {
+                if(i != j) {    
+                    getMonopolyIndexes[i].push(j);
+                }
+            }
+        }
     }
+
 }
