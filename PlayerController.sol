@@ -40,5 +40,21 @@ contract PlayerController is GameConstants {
         return player.balance;
     }
 
+    function increasePlayerBalance(address playerAddress,
+                                   uint256 balanceIncrease) internal {
+        Player storage player = playerData[playerAddress];
+        player.balance += balanceIncrease;
+    }
+
+    function decreasePlayerBalance(address playerAddress,
+                                   uint256 balanceDecrease) internal {
+        Player storage player = playerData[playerAddress];
+        require(
+            player.balance >= balanceDecrease,
+            "Player does not have enough money"
+        );
+        player.balance -= balanceDecrease;
+    }
+
 
 }
