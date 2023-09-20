@@ -24,7 +24,7 @@ contract PlayerController is GameConstants {
     function restartPlayers(address[] calldata players) internal {
         for (uint256 i = 0; i < players.length; i++) {
             Player storage player = playerData[players[i]];
-            player.balance = 0;
+            player.balance = PLAYER_START_BALANCE;
             player.freeJailCards = 0;
             player.position = 0;
         }

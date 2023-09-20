@@ -11,5 +11,6 @@ contract GameConstants {
     uint256 constant CHANCE_MOVE_MIN = 2;
     uint256 constant CHANCE_MOVE_MAX = 12;
     uint256 constant CHANCE_PAY_MIN = 300;
-    uint256 constant CHANCE_PAY_MAX = 1000;      
+    uint256 constant CHANCE_PAY_MAX = 1000;
+    uint256 constant PLAYER_START_BALANCE = 15000;      
 }

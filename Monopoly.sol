@@ -108,4 +108,31 @@ contract Monopoly is Jail, RoomController, PlayerController, RandomGenerator, Bo
         address currentPlayer = getCurrentPlayerAddress(roomId);
         Jail.sendToJail(currentPlayer);
     }
+
+    function getPlayerAddressById(uint256 roomId, uint256 id) public view returns(address){
+        require(id > 0, "Player id should be greater then 0");
+        uint256 playerIndex = id - 1;
+
+        Room storage room = rooms[roomId];
+        return room.players[playerIndex];
+    }
+
+    function playerOwnsMonopoly(uint256 roomId, 
+                                address player, 
+                                uint256 position) internal view returns(bool) {
+        uint256[] memory monopolyIndexes = getMonopolyIndexes[position];
+
+        for (uint256 i = 0; i < monopolyIndexes.length; i++) {
+            uint256 cardOwnerId = getCardOwnerId(roomId, position);
+            if (cardOwnerId == 0) {
+                return false;
+            }
+            address ownerAddress = getPlayerAddressById(roomId, cardOwnerId);
+            
+            if (ownerAddress != player) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
