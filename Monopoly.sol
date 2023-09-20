@@ -41,6 +41,7 @@ contract Monopoly is Jail, RoomController, PlayerController, RandomGenerator, Bo
                                       returns (uint256) {
         uint256 diceValue = getRandomDiceValue(roomId);
         address currentPlayer = getCurrentPlayerAddress(roomId);
+        Jail.playerMadeMove(currentPlayer);
         
         // downgrade property
         uint256 downgradeCost = getDowngradeCost(cardsToDowngrade);
