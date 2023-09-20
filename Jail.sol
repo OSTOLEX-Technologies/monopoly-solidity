@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 contract Jail {
     mapping(address => bool) public  isInJail;
 
-    function putInJail(address player) internal  {
+    function sendToJail(address player) internal  {
         isInJail[player] = true;
     }
 

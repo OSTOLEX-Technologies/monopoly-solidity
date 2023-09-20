@@ -60,12 +60,12 @@ contract Monopoly is Jail, RoomController, PlayerController, RandomGenerator, Bo
             payRent(roomId, newPosition);
         }
 
-        if (isCardFine(position)) {
-
+        if (isCardType(newPosition, CardType.Fine)) {
+            payFine(roomId, newPosition);
         }
 
-        if (isCardChance(position)) {
-            
+        if (isCardType(newPosition, CardType.SendToJail)) {
+            sendToJail(roomId);
         }
 
 
@@ -91,5 +91,14 @@ contract Monopoly is Jail, RoomController, PlayerController, RandomGenerator, Bo
 
     function payRent(uint256 roomId, uint256 position) internal {
         // TODO
+    }
+
+    function payFine(uint256 roomId, uint256 position) internal {
+        // TODO
+    }
+
+    function sendToJail(uint256 roomId) internal {
+        address currentPlayer = getCurrentPlayerAddress(roomId);
+        Jail.sendToJail(currentPlayer);
     }
 }
