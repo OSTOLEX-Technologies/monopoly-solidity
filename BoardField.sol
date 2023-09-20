@@ -9,18 +9,20 @@ contract BoardField is CardController {
     
         // MONOPOLY FIELD DATA
     constructor() {
-        // createMomopoly(uint8[]([1, 2, 3]));
+        createMonopoly([1, 2, 3]);
+        createMonopoly([4, 5]);
+
         monopolyField[0] = Card({
             name: "",
             cardType: CardType.Start,
-            price: 200,
+            price: 200, // user will get 200 when he stands on this card
             rentPrices: [uint16(0), 0, 0, 0, 0, 0]
         });
         monopolyField[1] = Card({
             name: "",
-            cardType: CardType.Start,
-            price: 200,
-            rentPrices: [uint16(0), 0, 0, 0, 0, 0]
+            cardType: CardType.Property,
+            price: 300,
+            rentPrices: [uint16(20), 50, 100, 300, 800, 1000]
         });
         monopolyField[2] = Card({
             name: "",
@@ -251,8 +253,8 @@ contract BoardField is CardController {
     }
 
     // END OF MONOPOLY FIELD DATA
-
-    function createMomopoly(uint8[] memory positions) internal {
+    
+    function createMonopoly(uint8[2] memory positions) internal {
         for(uint256 i = 0; i < positions.length; i++) {
             for(uint256 j = 0; j < positions.length; j++) {
                 if(i != j) {    
@@ -262,4 +264,23 @@ contract BoardField is CardController {
         }
     }
 
+    function createMonopoly(uint8[3] memory positions) internal {
+        for(uint256 i = 0; i < positions.length; i++) {
+            for(uint256 j = 0; j < positions.length; j++) {
+                if(i != j) {    
+                    getMonopolyIndexes[i].push(j);
+                }
+            }
+        }
+    }
+    
+    function createMonopoly(uint8[4] memory positions) internal {
+        for(uint256 i = 0; i < positions.length; i++) {
+            for(uint256 j = 0; j < positions.length; j++) {
+                if(i != j) {    
+                    getMonopolyIndexes[i].push(j);
+                }
+            }
+        }
+    }
 }
