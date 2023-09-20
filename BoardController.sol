@@ -10,7 +10,7 @@ contract BoardController is BoardField, GameConstants {
 
     struct Board {
         mapping(uint256 => uint256) cardPositionToOwnerId; // 0 -> bank | 1 -> 1st player (0 index)
-        mapping(uint256 => uint256) cardPositionToLevel;        
+        mapping(uint256 => uint256) cardPositionToLevel;
     }
 
     function getDowngradeCost(uint16[] calldata cards) internal view returns(uint256) {
@@ -78,6 +78,13 @@ contract BoardController is BoardField, GameConstants {
 
     function getCardPrice(uint256 position) public view returns(uint256) {
         return monopolyField[position].price;
+    }
+
+    function getCardRent(uint256 roomId, uint256 position) public view returns(uint256) {
+        Board storage board = roomBoard[roomId];
+        uint256 cardLevel = board.cardPositionToLevel[position];
+        Card storage card = monopolyField[position];
+        return card.rentPrices[cardLevel];
     }
 
     function getCardOwnerId(uint256 roomId, uint256 position) public view returns(uint256) {
