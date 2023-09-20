@@ -90,11 +90,17 @@ contract Monopoly is Jail, RoomController, PlayerController, RandomGenerator, Bo
     }
 
     function payRent(uint256 roomId, uint256 position) internal {
-        // TODO
+        address currentPlayerAddress = getCurrentPlayerAddress(roomId);
+
+        uint256 rentPrice = getCardRent(roomId, position);
+        decreasePlayerBalance(currentPlayerAddress, rentPrice);
     }
 
     function payFine(uint256 roomId, uint256 position) internal {
-        // TODO
+        address currentPlayerAddress = getCurrentPlayerAddress(roomId);
+
+        uint256 fine = getCardPrice(position);
+        decreasePlayerBalance(currentPlayerAddress, fine);
     }
 
     function sendToJail(uint256 roomId) internal {
