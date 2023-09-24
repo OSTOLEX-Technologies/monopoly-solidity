@@ -13,5 +13,6 @@ contract GameConstants {
     uint256 constant CHANCE_PAY_MIN = 300;
     uint256 constant CHANCE_PAY_MAX = 1000;
     uint256 constant PLAYER_START_BALANCE = 15000;    
-    uint256 constant MAX_PLAYER_AMOUNT = 8;  
+    uint256 constant MAX_PLAYER_AMOUNT = 8;
+    uint256 constant TIME_FOR_TRADE_BLOCK = 20;
 }

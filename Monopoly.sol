@@ -6,9 +6,16 @@ import './RoomController.sol';
 import './PlayerController.sol';
 import './RandomGenerator.sol';
 import './BoardController.sol';
+import './TradeController.sol';
+import './ChanceCardController.sol';
 
-
-contract Monopoly is Jail, RoomController, PlayerController, RandomGenerator, BoardController {
+contract Monopoly is Jail, 
+                     RoomController, 
+                     PlayerController, 
+                     RandomGenerator, 
+                     BoardController,
+                     TradeController,
+                     ChanceCardController {
 
     modifier onlyCurrentPlayer(uint256 roomId) {
         address currentPlayer = getCurrentPlayerAddress(roomId);
@@ -133,5 +140,27 @@ contract Monopoly is Jail, RoomController, PlayerController, RandomGenerator, Bo
             }
         }
         return true;
+    }
+
+    function createNewTrade(uint256 roomId,
+                            address agent,
+                            address counteragent,
+                            int256 balanceChange,
+                            uint16[] memory agentOfferedCards,
+                            uint16[] memory counteragentOfferedCards
+        ) public onlyCurrentPlayer(roomId) {
+            require(
+                !isTradeActive(roomId),
+                "There is another trade active in this room"
+            );
+
+            Trade storage trade = tradeInRoom[roomId];
+            trade.agent = agent;
+            trade.counteragent = counteragent;
+            trade.balanceChange = balanceChange;
+            trade.agentOfferedCards = agentOfferedCards;
+            trade.counteragentOfferedCards = counteragentOfferedCards;
+
+            trade.activeUntilBlock = block.number + TIME_FOR_TRADE_BLOCK;       
     }
 }
