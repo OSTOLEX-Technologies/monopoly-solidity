@@ -37,17 +37,14 @@ contract RandomGenerator is GameConstants {
     }
 
     function getRandomDiceValue(uint256 roomId) public returns(uint256) {
-        uint256 entropy = roomEntropy[roomId];
-        uint256 diceValue = 1 + entropy % MAX_DICE_VALUE;
-
+        uint256 diceValue = viewDiceValue(roomId);
         roomEntropy[roomId] ^= getRandomNumber();
-
         return diceValue;
     }
 
     // Does not update entropy
     function viewDiceValue(uint256 roomId) public view returns(uint256) {
-        return 1 + roomEntropy[roomId] % MAX_DICE_VALUE;
+        return MIN_DICE_VALUE + roomEntropy[roomId] % (MAX_DICE_VALUE - MIN_DICE_VALUE + 1);
     }
 
     function getValueWithinRange(uint256 value,
