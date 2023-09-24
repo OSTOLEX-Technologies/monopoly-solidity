@@ -69,7 +69,6 @@ contract Monopoly is Jail, RoomController, PlayerController, RandomGenerator, Bo
             sendToJail(roomId);
         }
 
-
         return diceValue;
     }
 
