@@ -8,6 +8,7 @@ import './RandomGenerator.sol';
 import './BoardController.sol';
 import './TradeController.sol';
 import './ChanceCardController.sol';
+import './PlayerQueueController.sol';
 
 contract Monopoly is Jail, 
                      RoomController, 
@@ -15,7 +16,8 @@ contract Monopoly is Jail,
                      RandomGenerator, 
                      BoardController,
                      TradeController,
-                     ChanceCardController {
+                     ChanceCardController,
+                     PlayerQueueController {
 
     modifier onlyCurrentPlayer(uint256 roomId) {
         address currentPlayer = getCurrentPlayerAddress(roomId);

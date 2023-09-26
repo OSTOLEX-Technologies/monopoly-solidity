@@ -17,6 +17,8 @@ contract GameConstants {
     uint256 constant PLAYER_START_BALANCE = 15000;  
     uint256 constant MAX_PLAYER_AMOUNT = 8;
     uint256 constant TIME_FOR_TRADE_BLOCK = 20;
+    uint256 constant TIME_FOR_ROOM_BLOCK = 60;
+    uint256 constant DEFAULT_NUMBER_OF_PLAYERS = 4;
     // PAY FOR JAIL FREE
     // GIVE MONEY WHEN PASS THROUGH START
     // MATCH MAKING (SIMPLE)
