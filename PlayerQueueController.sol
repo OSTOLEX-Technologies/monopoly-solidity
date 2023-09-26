@@ -14,6 +14,9 @@ contract PlayerQueueController is GameConstants, RoomController {
         if (block.number > roomValidUntilBlock) {
             clearWaitingRoom();
         }
+        if (players.length == 0) {
+            roomValidUntilBlock = block.number + TIME_FOR_ROOM_BLOCK;
+        }
         address player = msg.sender;
         players.push(player);
         if (players.length == DEFAULT_NUMBER_OF_PLAYERS) {
