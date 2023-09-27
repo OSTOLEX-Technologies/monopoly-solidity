@@ -39,6 +39,12 @@ contract RoomController {
         return room.players[currentPlayerIndex];
     }
 
+    function getNumberOfPlayersInRoom(uint256 roomId) public view returns(uint256) {
+        Room storage room = rooms[roomId];
+
+        return room.players.length;
+    }
+
     function switchPlayer(uint256 roomId) internal {
         Room storage room = rooms[roomId];
         uint256 numberOfPlayers = room.players.length;
