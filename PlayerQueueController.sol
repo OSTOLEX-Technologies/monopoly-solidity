@@ -49,4 +49,14 @@ contract PlayerQueueController is GameConstants, RoomController {
         return false;
     }
 
+    function getNumberOfPlayersInWaitingRoom() public view returns (uint256) {
+        return players.length;
+    }
+
+    function getNumberOfBlockTillWaitingRoomClose() public view returns (uint256) {
+        if (block.number >= roomValidUntilBlock) {
+            return 0;
+        }
+        return roomValidUntilBlock - block.number;
+    }
 }
