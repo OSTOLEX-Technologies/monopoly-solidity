@@ -33,4 +33,20 @@ contract PlayerQueueController is GameConstants, RoomController {
         }
     }
 
+    function isWaitingRoomActive() public view returns(bool) {
+        return block.number <= roomValidUntilBlock;
+    }
+
+    function isPlayerInWaitingRoom() public view returns (bool) {
+        if (!isWaitingRoomActive()) {
+            return false;
+        }
+        for (uint256 i = 0; i < players.length; i++) {
+            if (players[i] == msg.sender) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
